@@ -1,11 +1,15 @@
+MicroModal.init();
+
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-      this.title = title
-      this.author = author
-      this.pages = pages
-      this.read = read
-    }
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+}
 
 // Book.prototype.info = function () {
 //   if (this.read === true) {
@@ -50,4 +54,19 @@ function displayBooks() {
   }
 }
 
+const addButton = document.getElementById("add-button");
+const titleInput = document.getElementById("title-input");
+const authorInput = document.getElementById("author-input");
+const pagesInput = document.getElementById("pages-input");
+const readInput = document.getElementById("read-input");
+const inputs = document.querySelectorAll("input");
 
+addButton.addEventListener("click", () => {
+  addBook(titleInput.value, authorInput.value, pagesInput.value, readInput.value);
+  inputs.forEach(input => input.value = "")
+  MicroModal.close("new-book-modal");
+});
+
+addBook("Catcher in the Rye", "JD Salinger", 340, true);
+addBook("harry potter", "jk rowling", 584, true);
+addBook("Maltese Falcon", "PT Boomer", 544, false);
