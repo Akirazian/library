@@ -11,21 +11,14 @@ class Book {
   }
 }
 
-// Book.prototype.info = function () {
-//   if (this.read === true) {
-//     return `${this.title} by ${this.author}, ${this.pages} pages, read`
-//     } else {
-//     return `${this.title} by ${this.author}, ${this.author} pages, not read yet`
-//     }
-// }
-
 function addBook(title, author, pages, read) {
   myLibrary.push(new Book(title, author, pages, read));
   displayBooks();
 }
 
-function removeBook(number) {
-  myLibrary.splice(number, 1);
+function removeBook(event) {
+  let position = event.currentTarget.parentNode.id.split('-')[1];
+  myLibrary.splice(position, 1);
   displayBooks();
 }
 
@@ -45,12 +38,17 @@ function displayBooks() {
     pages.innerText = myLibrary[i].pages + " pages";
     let read = document.createElement("li");
     read.innerText = (myLibrary[i].read ? "Read" : "Not Read");
+    let deleteButton = document.createElement("span");
+    deleteButton.classList.add("material-icons-outlined");
+    deleteButton.innerText = "delete"
+    deleteButton.addEventListener("click", removeBook);
   
     library.appendChild(newBook);
     newBook.appendChild(title);
     newBook.appendChild(author);
     newBook.appendChild(pages);
     newBook.appendChild(read);
+    newBook.appendChild(deleteButton);
   }
 }
 

@@ -18,6 +18,10 @@ li {
   flex-grow: 1;
 }
 
+span {
+  text-align: center;
+}
+
 ::marker {
   color: white;
 }
