@@ -9,6 +9,12 @@ class Book {
     this.pages = pages;
     this.read = read;
   }
+
+  toggleRead() {
+    if (this.read === true) this.read = false;
+    else this.read = true;
+    displayBooks();
+  }
 }
 
 function addBook(title, author, pages, read) {
@@ -30,16 +36,23 @@ function displayBooks() {
     let newBook = document.createElement("ul")
     newBook.id = "book-" + i;
     newBook.classList.add("book");
+
     let title = document.createElement("li");
-    title.innerText = myLibrary[i].title;
+    title.innerText = myLibrary[i].title.toTitleCase();
+
     let author = document.createElement("li");
-    author.innerText = myLibrary[i].author;
+    author.innerText = "by " + myLibrary[i].author.toTitleCase();
+
     let pages = document.createElement("li");
     pages.innerText = myLibrary[i].pages + " pages";
-    let read = document.createElement("li");
+
+    let read = document.createElement("button");
     read.innerText = (myLibrary[i].read ? "Read" : "Not Read");
+    read.classList.add("pointer");
+    read.addEventListener("click", () => myLibrary[i].toggleRead());
+    
     let deleteButton = document.createElement("span");
-    deleteButton.classList.add("material-icons-outlined");
+    deleteButton.classList.add("material-icons-outlined", "pointer");
     deleteButton.innerText = "delete"
     deleteButton.addEventListener("click", removeBook);
   
@@ -51,6 +64,7 @@ function displayBooks() {
     newBook.appendChild(deleteButton);
   }
 }
+
 
 const addButton = document.getElementById("add-button");
 const titleInput = document.getElementById("title-input");
@@ -65,6 +79,6 @@ addButton.addEventListener("click", () => {
   MicroModal.close("new-book-modal");
 });
 
-addBook("Catcher in the Rye", "JD Salinger", 340, true);
-addBook("harry potter", "jk rowling", 584, true);
-addBook("Maltese Falcon", "PT Boomer", 544, false);
+addBook("Catcher In The Rye", "JD salinger", 340, true);
+addBook("harry potter", "JK rowling", 584, true);
+addBook("Maltese falcon", "PT Boomer", 544, false);
