@@ -74,7 +74,7 @@ const readInput = document.getElementById("read-input");
 const inputs = document.querySelectorAll("input");
 
 addButton.addEventListener("click", () => {
-  addBook(titleInput.value, authorInput.value, pagesInput.value, readInput.value);
+  addBook(titleInput.value, authorInput.value, pagesInput.value, readInput.checked);
   inputs.forEach(input => input.value = "")
   MicroModal.close("new-book-modal");
 });
