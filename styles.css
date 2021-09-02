@@ -43,9 +43,9 @@ span {
         MIT License
 \**************************/
 
-.modal {
-  font-family: arial,sans-serif;
-}
+/* .modal {
+
+} */
 
 .modal__overlay {
   position: fixed;
@@ -108,7 +108,7 @@ span {
   padding-right: 1rem;
   padding-top: .5rem;
   padding-bottom: .5rem;
-  background-color: #e6e6e6;
+  background-color: rgb(230, 230, 230);
   color: rgba(0,0,0);
   border-radius: .25rem;
   border-style: none;
@@ -130,14 +130,10 @@ span {
   transition: transform .25s ease-out,-webkit-transform .25s ease-out;
 }
 
-.modal__btn:focus, .modal__btn:hover {
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
-}
 
 .modal__btn-primary {
-  background-color: black;
-  color: #fff;
+  background-color: rgb(164, 228, 135);
+  color: rgb(0, 0, 0);
 }
 
 

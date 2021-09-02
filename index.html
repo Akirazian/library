@@ -20,17 +20,20 @@
             </h2>
             <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
           </header>
-          <main class="modal__content" id="add-book-content">
-            Title: <input type="text" id="title-input">
+          <form name="add-book-form" class="modal__content" id="add-book-form">
+            <label for="title-input">Title:</label>
+            <input type="text" id="title-input" name="title-input" required>
             <br>
-            Author: <input type="text" id="author-input">
+            <label for="author-input">Author: </label>
+            <input type="text" name="author-input" id="author-input" required>
             <br>
-            Pages: <input type="number" id="pages-input">
+            <label for="pages-input">Pages: </label>
+            <input type="number" name="pages-input" id="pages-input" required>
             <br>
-            <label>Read <input type="checkbox" id="read-input"></label>
-          </main>
+            <label for="read-input">Read <input type="checkbox" name="read-input" id="read-input"></label>
+          </form>
           <footer class="modal__footer">
-            <button id="add-button" class="modal__btn modal__btn-primary">Add</button>          
+            <button type="submit" name="add-button" form="add-book-form" id="add-button" class="modal__btn modal__btn-primary">Add</button>          
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
           </footer>
         </div>

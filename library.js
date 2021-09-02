@@ -53,7 +53,7 @@ function displayBooks() {
     
     let deleteButton = document.createElement("span");
     deleteButton.classList.add("material-icons-outlined", "pointer");
-    deleteButton.innerText = "delete"
+    deleteButton.innerText = "clear"
     deleteButton.addEventListener("click", removeBook);
   
     library.appendChild(newBook);
@@ -71,9 +71,15 @@ const titleInput = document.getElementById("title-input");
 const authorInput = document.getElementById("author-input");
 const pagesInput = document.getElementById("pages-input");
 const readInput = document.getElementById("read-input");
+const form = document.querySelector("form");
 const inputs = document.querySelectorAll("input");
 
 addButton.addEventListener("click", () => {
+  for (const el of form.querySelectorAll("[required]")) { //check if all required fields are filled
+    if (!el.reportValidity()) {
+      return;
+    }
+  }
   addBook(titleInput.value, authorInput.value, pagesInput.value, readInput.checked);
   inputs.forEach(input => input.value = "")
   MicroModal.close("new-book-modal");
