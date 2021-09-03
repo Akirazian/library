@@ -1,6 +1,33 @@
 MicroModal.init();
 
+Storage.prototype.setObject = function(key, value) {
+  this.setItem(key, JSON.stringify(value));
+}
+
+Storage.prototype.getObject = function(key) {
+  var value = this.getItem(key);
+  return value && JSON.parse(value);
+}
+
+function localSave() {
+  localStorage.setObject("myLibrary", myLibrary);
+}
+
+function localDownload() {
+  if (localStorage.getObject("myLibrary") == null) return;
+  myLibrary = localStorage.getObject("myLibrary");
+  for (i = 0; i < myLibrary.length; i++) {
+    myLibrary[i].toggleRead = function () {
+      if (this.read === true) this.read = false;
+      else this.read = true;
+      displayBooks();
+    }
+  }
+  displayBooks();
+}
+
 let myLibrary = [];
+localDownload();
 
 class Book {
   constructor(title, author, pages, read) {
@@ -63,8 +90,9 @@ function displayBooks() {
     newBook.appendChild(read);
     newBook.appendChild(deleteButton);
   }
-}
 
+  localSave();
+}
 
 const addButton = document.getElementById("add-button");
 const titleInput = document.getElementById("title-input");
@@ -73,6 +101,7 @@ const pagesInput = document.getElementById("pages-input");
 const readInput = document.getElementById("read-input");
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll("input");
+const clearButton = document.getElementById("clear-button");
 
 addButton.addEventListener("click", () => {
   for (const el of form.querySelectorAll("[required]")) { //check if all required fields are filled
@@ -84,7 +113,3 @@ addButton.addEventListener("click", () => {
   inputs.forEach(input => input.value = "")
   MicroModal.close("new-book-modal");
 });
-
-addBook("Catcher In The Rye", "JD salinger", 340, true);
-addBook("harry potter", "JK rowling", 584, true);
-addBook("Maltese falcon", "PT Boomer", 544, false);
