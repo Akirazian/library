@@ -1,5 +1,14 @@
 MicroModal.init();
 
+const addButton = document.getElementById("add-button");
+const titleInput = document.getElementById("title-input");
+const authorInput = document.getElementById("author-input");
+const pagesInput = document.getElementById("pages-input");
+const readInput = document.getElementById("read-input");
+const form = document.querySelector("form");
+const inputs = document.querySelectorAll("input");
+const clearButton = document.getElementById("clear-button");
+
 Storage.prototype.setObject = function(key, value) {
   this.setItem(key, JSON.stringify(value));
 }
@@ -94,15 +103,6 @@ function displayBooks() {
   localSave();
 }
 
-const addButton = document.getElementById("add-button");
-const titleInput = document.getElementById("title-input");
-const authorInput = document.getElementById("author-input");
-const pagesInput = document.getElementById("pages-input");
-const readInput = document.getElementById("read-input");
-const form = document.querySelector("form");
-const inputs = document.querySelectorAll("input");
-const clearButton = document.getElementById("clear-button");
-
 addButton.addEventListener("click", () => {
   for (const el of form.querySelectorAll("[required]")) { //check if all required fields are filled
     if (!el.reportValidity()) {
@@ -113,3 +113,8 @@ addButton.addEventListener("click", () => {
   inputs.forEach(input => input.value = "")
   MicroModal.close("new-book-modal");
 });
+
+clearButton.addEventListener("click", () => {
+  myLibrary = [];
+  displayBooks();
+})
