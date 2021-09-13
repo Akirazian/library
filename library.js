@@ -1,5 +1,3 @@
-MicroModal.init();
-
 const addButton = document.getElementById("add-button");
 const titleInput = document.getElementById("title-input");
 const authorInput = document.getElementById("author-input");
@@ -65,7 +63,7 @@ function removeBook(event) {
 }
 
 function displayBooks() {
-  let library = document.querySelector(".container");
+  let library = document.querySelector("#library");
   library.innerHTML = "";
 
   for (let i = 0; i < myLibrary.length; i++) {
@@ -111,7 +109,6 @@ addButton.addEventListener("click", () => {
   }
   addBook(titleInput.value, authorInput.value, pagesInput.value, readInput.checked);
   inputs.forEach(input => input.value = "")
-  MicroModal.close("new-book-modal");
 });
 
 clearButton.addEventListener("click", () => {
