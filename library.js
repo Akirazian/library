@@ -6,6 +6,7 @@ const readInput = document.getElementById("read-input");
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll("input");
 const clearButton = document.getElementById("clear-button");
+const modal = new bootstrap.Modal(document.getElementById('new-book-modal'));
 
 Storage.prototype.setObject = function(key, value) {
   this.setItem(key, JSON.stringify(value));
@@ -57,7 +58,7 @@ function addBook(title, author, pages, read) {
 }
 
 function removeBook(event) {
-  let position = event.currentTarget.parentNode.id.split('-')[1];
+  let position = event.currentTarget.id.split('-')[1];
   myLibrary.splice(position, 1);
   displayBooks();
 }
@@ -69,33 +70,50 @@ function displayBooks() {
   for (let i = 0; i < myLibrary.length; i++) {
     let newBook = document.createElement("div")
     newBook.id = "book-" + i;
-    newBook.classList.add("col-md");
+    newBook.classList.add("col-sm");
 
-    let title = document.createElement("li");
+    let cardTemplate = document.createElement("div");
+    cardTemplate.classList.add("card", "shadow", "text-dark", "bg-light", "bg-gradient", "text-center")
+
+    let cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+
+    let title = document.createElement("h4");
+    title.classList.add("card-title", "mb-3");
     title.innerText = myLibrary[i].title.toTitleCase();
 
-    let author = document.createElement("li");
+    let author = document.createElement("h5");
+    author.classList.add("card-subtitle", "mb-2");
     author.innerText = "by " + myLibrary[i].author.toTitleCase();
 
-    let pages = document.createElement("li");
+    let pages = document.createElement("p");
+    pages.classList.add("card-text");
     pages.innerText = myLibrary[i].pages + " pages";
 
     let read = document.createElement("button");
     read.innerText = (myLibrary[i].read ? "Read" : "Not Read");
-    read.classList.add("pointer");
+    if (myLibrary[i].read === true) { 
+      read.classList.add("btn-success")
+    } else {
+      read.classList.add("btn-danger");
+    }
+    read.classList.add("btn", "mb-3");
     read.addEventListener("click", () => myLibrary[i].toggleRead());
     
-    let deleteButton = document.createElement("span");
-    deleteButton.classList.add("material-icons-outlined", "pointer");
-    deleteButton.innerText = "clear"
+    let deleteButtonContainer = document.createElement("p");
+    deleteButtonContainer.classList.add("card-text");
+
+    let deleteButton = document.createElement("button");
+    deleteButton.classList.add("btn-close");
+    deleteButton.id = "delete-" + i;
+    deleteButton.type = "button";
     deleteButton.addEventListener("click", removeBook);
   
     library.appendChild(newBook);
-    newBook.appendChild(title);
-    newBook.appendChild(author);
-    newBook.appendChild(pages);
-    newBook.appendChild(read);
-    newBook.appendChild(deleteButton);
+    newBook.appendChild(cardTemplate);
+    cardTemplate.appendChild(cardBody);
+    deleteButtonContainer.appendChild(deleteButton);
+    cardBody.append(title, author, pages, read, deleteButtonContainer);
   }
 
   localSave();
@@ -109,6 +127,7 @@ addButton.addEventListener("click", () => {
   }
   addBook(titleInput.value, authorInput.value, pagesInput.value, readInput.checked);
   inputs.forEach(input => input.value = "")
+  modal.toggle();
 });
 
 clearButton.addEventListener("click", () => {
