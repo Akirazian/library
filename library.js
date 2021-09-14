@@ -63,13 +63,13 @@ function removeBook(event) {
 }
 
 function displayBooks() {
-  let library = document.querySelector("#library");
+  let library = document.getElementById("library-container");
   library.innerHTML = "";
 
   for (let i = 0; i < myLibrary.length; i++) {
-    let newBook = document.createElement("ul")
+    let newBook = document.createElement("div")
     newBook.id = "book-" + i;
-    newBook.classList.add("book");
+    newBook.classList.add("col-md");
 
     let title = document.createElement("li");
     title.innerText = myLibrary[i].title.toTitleCase();
