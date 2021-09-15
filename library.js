@@ -6,7 +6,8 @@ const readInput = document.getElementById("read-input");
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll("input");
 const clearButton = document.getElementById("clear-button");
-const modal = new bootstrap.Modal(document.getElementById('new-book-modal'));
+const modal = new bootstrap.Modal(document.getElementById("new-book-modal"));
+const clearModal = new bootstrap.Modal(document.getElementById("are-you-sure-modal"))
 
 Storage.prototype.setObject = function(key, value) {
   this.setItem(key, JSON.stringify(value));
@@ -133,4 +134,5 @@ addButton.addEventListener("click", () => {
 clearButton.addEventListener("click", () => {
   myLibrary = [];
   displayBooks();
+  clearModal.toggle();
 })
