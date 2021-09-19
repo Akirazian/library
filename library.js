@@ -18,6 +18,22 @@ Storage.prototype.getObject = function(key) {
   return value && JSON.parse(value);
 }
 
+const bookProto = {
+  toggleRead () {
+    if (this.read === true) this.read = false;
+    else this.read = true;
+    displayBooks();
+  }
+}
+
+const bookMaker = (title, author, pages, read) => { 
+  return Object.assign(Object.create(bookProto), {title, author, pages, read}
+)};
+
+let myLibrary = [];
+localDownload();
+
+
 function localSave() {
   localStorage.setObject("myLibrary", myLibrary);
 }
@@ -26,35 +42,14 @@ function localDownload() {
   if (localStorage.getObject("myLibrary") == null) return;
   myLibrary = localStorage.getObject("myLibrary");
   for (i = 0; i < myLibrary.length; i++) {
-    myLibrary[i].toggleRead = function () {
-      if (this.read === true) this.read = false;
-      else this.read = true;
-      displayBooks();
-    }
+    Object.assign(myLibrary[i], bookProto);
   }
   displayBooks();
 }
 
-let myLibrary = [];
-localDownload();
-
-class Book {
-  constructor(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-  }
-
-  toggleRead() {
-    if (this.read === true) this.read = false;
-    else this.read = true;
-    displayBooks();
-  }
-}
-
 function addBook(title, author, pages, read) {
-  myLibrary.push(new Book(title, author, pages, read));
+  let newBook = bookMaker(title, author, pages, read);
+  myLibrary.push(newBook);
   displayBooks();
 }
 
