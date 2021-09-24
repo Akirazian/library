@@ -30,9 +30,6 @@ const bookMaker = (title, author, pages, read) => {
   return Object.assign(Object.create(bookProto), {title, author, pages, read}
 )};
 
-let myLibrary = [];
-localDownload();
-
 
 function localSave() {
   localStorage.setObject("myLibrary", myLibrary);
@@ -46,6 +43,9 @@ function localDownload() {
   }
   displayBooks();
 }
+
+let myLibrary = [];
+localDownload();
 
 function addBook(title, author, pages, read) {
   let newBook = bookMaker(title, author, pages, read);
@@ -115,7 +115,7 @@ function displayBooks() {
   localSave();
 }
 
-addButton.addEventListener("click", () => {
+function addBookAction() {
   for (const el of form.querySelectorAll("[required]")) { //check if all required fields are filled
     if (!el.reportValidity()) {
       return;
@@ -124,10 +124,18 @@ addButton.addEventListener("click", () => {
   addBook(titleInput.value, authorInput.value, pagesInput.value, readInput.checked);
   inputs.forEach(input => input.value = "")
   modal.toggle();
-});
+}
+
+addButton.addEventListener("click", addBookAction);
 
 clearButton.addEventListener("click", () => {
   myLibrary = [];
   displayBooks();
   clearModal.toggle();
 })
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") { 
+    addBookAction();
+  }
+});
