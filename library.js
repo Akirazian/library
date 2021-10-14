@@ -18,18 +18,20 @@ Storage.prototype.getObject = function(key) {
   return value && JSON.parse(value);
 }
 
-const bookProto = {
-  toggleRead () {
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title.toTitleCase();
+    this.author = author.toTitleCase();
+    this.pages = pages;
+    this.read = read;
+  }
+
+  toggleRead() {
     if (this.read === true) this.read = false;
     else this.read = true;
     displayBooks();
   }
-}
-
-const bookMaker = (title, author, pages, read) => { 
-  return Object.assign(Object.create(bookProto), {title, author, pages, read}
-)};
-
+};
 
 function localSave() {
   localStorage.setObject("myLibrary", myLibrary);
@@ -38,9 +40,7 @@ function localSave() {
 function localDownload() {
   if (localStorage.getObject("myLibrary") == null) return;
   myLibrary = localStorage.getObject("myLibrary");
-  for (i = 0; i < myLibrary.length; i++) {
-    Object.assign(myLibrary[i], bookProto);
-  }
+  myLibrary.forEach(book => Object.assign(book, Book));
   displayBooks();
 }
 
@@ -48,7 +48,7 @@ let myLibrary = [];
 localDownload();
 
 function addBook(title, author, pages, read) {
-  let newBook = bookMaker(title, author, pages, read);
+  let newBook = new Book(title, author, pages, read);
   myLibrary.push(newBook);
   displayBooks();
 }
@@ -76,11 +76,11 @@ function displayBooks() {
 
     let title = document.createElement("h4");
     title.classList.add("card-title", "mb-3");
-    title.innerText = myLibrary[i].title.toTitleCase();
+    title.innerText = myLibrary[i].title;
 
     let author = document.createElement("h5");
     author.classList.add("card-subtitle", "mb-2");
-    author.innerText = "by " + myLibrary[i].author.toTitleCase();
+    author.innerText = "by " + myLibrary[i].author;
 
     let pages = document.createElement("p");
     pages.classList.add("card-text");
