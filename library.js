@@ -40,7 +40,7 @@ function localSave() {
 function localDownload() {
   if (localStorage.getObject("myLibrary") == null) return;
   myLibrary = localStorage.getObject("myLibrary");
-  myLibrary.forEach(book => Object.assign(book, Book));
+  myLibrary.forEach(book => book.toggleRead = Book.prototype.toggleRead);
   displayBooks();
 }
 
